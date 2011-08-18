@@ -20,7 +20,7 @@ public:
 // 属性
 public:
 	CRect m_leftRect;
-	BOOL m_bSliding;////ドラッグしてるか
+	BOOL m_bSliding;////ドラッグしてるかを示す
 	int m_iCurrWndCnt;
 	BOOL m_bSlided;
 	CRect m_OldClientRect;
@@ -75,6 +75,7 @@ private:
 	BOOL m_bChatState;
 public:
 	afx_msg void OnUpdateLanState(UINT nID);
+	//afx_msg void OnUpdateToolLanState(UINT nID);
 	afx_msg void OnSideWndSelect(UINT nID);
 	afx_msg void OnUpdateMainViewState(UINT nID);
 	afx_msg void OnUpdateDesktopState(UINT nID);

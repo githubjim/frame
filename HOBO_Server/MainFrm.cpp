@@ -22,6 +22,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWnd)
 	ON_MESSAGE(WM_SLIDE_END, OnSlideEnd)
 
 	ON_COMMAND_RANGE(ID_STATE_ONLINE, ID_STATE_OFFLINE, OnUpdateLanState)
+	//ON_COMMAND_RANGE(ID_TOOL_STATE_OFFLINE,ID_TOOL_STATE_ONLINE, OnUpdateToolLanState)
 	ON_COMMAND_RANGE(ID_KEY_ASSIGN,ID_ONLINEMEMBER,OnSideWndSelect)
 	ON_COMMAND_RANGE(ID_MAINVIEW_LARGE, ID_MAINVIEW_SMALL, OnUpdateMainViewState)
 	ON_COMMAND_RANGE(ID_DESKTOP_LARGE,ID_DESKTOP_SMALL,OnUpdateDesktopState)
@@ -84,7 +85,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		TRACE0("ƒc[ƒ‹ ƒo[‚Ìì¬‚É¸”s‚µ‚Ü‚µ‚½B\n");
 		return -1;      // ì¬‚Å‚«‚Ü‚¹‚ñ‚Å‚µ‚½B
 	}
-	//Å‰‰B‚·
+	//Å‰‚Ì‰B‚·
 	CToolBarCtrl &tbc = m_wndToolBar.GetToolBarCtrl();
 	tbc.SetState(ID_STATE_ONLINE,TBSTATE_HIDDEN);
 
@@ -200,17 +201,25 @@ void CMainFrame::OnUpdateLanState(UINT nID){
 	CMenu * pSubMenu = pMainMenu->GetSubMenu(3);
 	CMenu * pSSubMenu = pSubMenu->GetSubMenu(5);
 
-	pSSubMenu->GetMenuState
-
-	pSSubMenu->CheckMenuRadioItem(ID_STATE_ONLINE,ID_STATE_OFFLINE,
-		nID == ID_STATE_ONLINE ? ID_STATE_OFFLINE : ID_STATE_ONLINE,
-		MF_BYCOMMAND);
-
 	//6[„8A‚V|„‚UA‚W|„‚VA‚±‚ÌO‰ñŒğŠ·
 	m_bLANState = !m_bLANState;
 	m_bLANState ? ToolbarImgChange(ID_STATE_ONLINE,ID_STATE_OFFLINE) : ToolbarImgChange(ID_STATE_OFFLINE,ID_STATE_ONLINE) ;
+	UINT state = pSSubMenu->GetMenuState(nID,MF_BYCOMMAND);
+	if(520  == state ) return;//MF_USECHECKBITMAPS‚¾‚¯‚È‚ê‚Î”½‰‚·‚é
 
+	nID = m_bLANState ? ID_STATE_ONLINE : ID_STATE_OFFLINE;
+
+
+	pSSubMenu->CheckMenuRadioItem(ID_STATE_ONLINE,ID_STATE_OFFLINE,
+		nID/* == ID_STATE_ONLINE ? ID_STATE_OFFLINE : ID_STATE_ONLINE*/,
+		MF_BYCOMMAND);
 }
+
+//void CMainFrame::OnUpdateToolLanState(UINT nID){
+//	
+//	OnUpdateLanState(m_bLANState ? ID_STATE_ONLINE : ID_STATE_OFFLINE  );
+//
+//}
 
 void CMainFrame::OnUpdateMainViewState(UINT nID){
 	CMenu * pMainMenu = this->GetMenu();
